@@ -1,72 +1,45 @@
-local Library = loadstring(game:HttpGet("https://pastebin.com/raw/vff1bQ9F"))()
+local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
+local Window = OrionLib:MakeWindow({Name = "DurexHub", HidePremium = false, SaveConfig = true, ConfigFolder = "OrionTest"})
 
-local Window = Library.CreateLib("DurexHub", "DarkTheme")
+OrionLib:MakeNotification({
+	Name = "DurexHub",
+	Content = "Notification content... what will it say??",
+	Image = "rbxassetid://4483345998",
+	Time = 5
+})
 
-local Tab = Window:NewTab("Main")
+local Tab = Window:MakeTab({
+    Name = "ESP Settings",
+    Icon = "rbxassetid://4483345998",
+    PremiumOnly = false
+})
 
-local Section = Tab:NewSection("Main Features")
+local Section = Tab:AddSection({
+	Name = "Main Features"
+})
 
-Section:NewButton("Auto Aim", "Best Auto Aim", function()
-loadstring(game:HttpGet(('https://pastebin.com/raw/3t1v5Zve')))()
-    print("Clicked")
-end)
-
-Section:NewButton("Player ESP", "ButtonInfo", function()
+Tab:AddButton({
+	Name = "PlayersESP",
+	Callback = function()
 loadstring(game:HttpGet(('https://pastebin.com/raw/JF7jpTwn')))()
-    print("Clicked")
-end)
+      		print("button pressed")
+  	end    
+})
 
-Section:NewToggle("Infinite Jump", "ToggleInfo", function(state)
-    if state then
-        print("Toggle On")
-        InfiniteJumpEnabled = true
-    else
-        print("Toggle Off")
-        InfiniteJumpEnabled = false
-    end
-end)
+Tab:AddButton({
+	Name = "HealthBar",
+	Callback = function()
+loadstring(game:HttpGet(('https://pastebin.com/raw/5XAymPEA')))()
+      		print("button pressed")
+  	end    
+})
 
-local InfiniteJumpEnabled = true
-
-game:GetService("UserInputService").JumpRequest:Connect(function()
-    if InfiniteJumpEnabled then
-        local character = game:GetService("Players").LocalPlayer.Character
-        if character and character:FindFirstChildOfClass('Humanoid') then
-            character:FindFirstChildOfClass('Humanoid'):ChangeState("Jumping")
-        end
-    end
-end)
-
--- Assuming you have your Section and toggle setup
-Section:NewToggle("ToggleText", "ToggleInfo", function(state)
-    if state then
-        print("Toggle On")
-        noclip()
-    else
-        print("Toggle Off")
-        clip()
-    end
-end)
-
-local Noclip = nil
-local Clip = nil
-
-function noclip()
-    Clip = false
-    local function Nocl()
-        if Clip == false and game.Players.LocalPlayer.Character ~= nil then
-            for _,v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
-                if v:IsA('BasePart') and v.CanCollide and v.Name ~= floatName then
-                    v.CanCollide = false
-                end
-            end
-        end
-        wait(0.21) -- basic optimization
-    end
-    Noclip = game:GetService('RunService').Stepped:Connect(Nocl)
-end
-
-function clip()
-    if Noclip then Noclip:Disconnect() end
-    Clip = true
-end
+Tab:AddBind({
+	Name = "Auto Aim",
+	Default = Enum.KeyCode.E,
+	Hold = false,
+	Callback = function()
+loadstring(game:HttpGet(('https://pastebin.com/raw/3t1v5Zve')))()
+		print("press")
+	end    
+})
