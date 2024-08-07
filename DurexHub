@@ -3,28 +3,41 @@ local Window = Library.CreateLib("DurexHub", "DarkTheme")
 local Tab = Window:NewTab("Main")
 local Section = Tab:NewSection("Main Features")
 
+-- Auto Aim Button
 Section:NewButton("Auto Aim", "Best Auto Aim", function()
-loadstring(game:HttpGet(('https://pastebin.com/raw/3t1v5Zve')))()
-    print("Clicked")
-end)
-
-Section:NewButton("Player ESP", "ButtonInfo", function()
-loadstring(game:HttpGet(('https://pastebin.com/raw/JF7jpTwn')))()
-    print("Clicked")
-end)
-
--- Assuming you have your Section and toggle setup
-Section:NewToggle("Infinite Jump", "ToggleInfo", function(state)
-    if state then
-        print("Toggle On")
-        InfiniteJumpEnabled = true
+    local success, err = pcall(function()
+        loadstring(game:HttpGet(('https://pastebin.com/raw/3t1v5Zve')))()
+    end)
+    if not success then
+        warn("Failed to load Auto Aim script: " .. err)
     else
-        print("Toggle Off")
-        InfiniteJumpEnabled = false
+        print("Auto Aim button clicked")
     end
 end)
 
+-- Player ESP Button
+Section:NewButton("Player ESP", "ButtonInfo", function()
+    local success, err = pcall(function()
+        loadstring(game:HttpGet(('https://pastebin.com/raw/JF7jpTwn')))()
+    end)
+    if not success then
+        warn("Failed to load Player ESP script: " .. err)
+    else
+        print("Player ESP button clicked")
+    end
+end)
+
+-- Infinite Jump Toggle
 local InfiniteJumpEnabled = true
+Section:NewToggle("Infinite Jump", "ToggleInfo", function(state)
+    if state then
+        print("Infinite Jump On")
+        InfiniteJumpEnabled = true
+    else
+        print("Infinite Jump Off")
+        InfiniteJumpEnabled = false
+    end
+end)
 
 game:GetService("UserInputService").JumpRequest:Connect(function()
     if InfiniteJumpEnabled then
@@ -35,17 +48,7 @@ game:GetService("UserInputService").JumpRequest:Connect(function()
     end
 end)
 
--- Assuming you have your Section and toggle setup
-Section:NewToggle("ToggleText", "ToggleInfo", function(state)
-    if state then
-        print("Toggle On")
-        noclip()
-    else
-        print("Toggle Off")
-        clip()
-    end
-end)
-
+-- Noclip Toggle
 local Noclip = nil
 local Clip = nil
 
@@ -59,12 +62,4 @@ function noclip()
                 end
             end
         end
-        wait(0.21) -- basic optimization
-    end
-    Noclip = game:GetService('RunService').Stepped:Connect(Nocl)
-end
-
-function clip()
-    if Noclip then Noclip:Disconnect() end
-    Clip = true
-end
+        wait(0.
